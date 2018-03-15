@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans	http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    
+    <!-- Uncomment and add your base-package here:
+         <context:component-scan
+            base-package="org.springframework.samples.service"/>  -->
+                    
+           
+     <context:annotation-config />
+     <context:component-scan base-package="com.tsugaruinfo.*" annotation-config="true" />
+     <!-- 組み込みデータベース用の設定>
+	<jdbc:embedded-database id="dataSource" type="H2">
+		<jdbc:script location="classpath:script.sql"/>
+	</jdbc:embedded-database-->
+
+	<!-- データベースプロパティの設定 -->
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	  	<property name="location" value="database.properties" />
+	</bean>
+
+	<bean
+	    class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+	<!-- EntityManagerの設定 -->
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="generateDdl" value="true" />
+			</bean>
+		</property>
+	</bean>
+
+	<!-- DB接続用の設定 -->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+
+	<!-- JDBCテンプレートBeanの作成 -->
+	<bean class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg ref="dataSource" />
+	</bean>
+
+</beans>

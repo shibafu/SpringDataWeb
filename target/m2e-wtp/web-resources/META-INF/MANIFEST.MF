@@ -1,11 +1,10 @@
 Manifest-Version: 1.0
-Implementation-Title: WebAquarium3.1
+Implementation-Title: SpringDataWeb
 Implementation-Version: 0.0.1-SNAPSHOT
 Built-By: Work
 Implementation-Vendor-Id: com.TsugaruInfo
 Build-Jdk: 1.8.0_161
-Implementation-URL: https://platform.spring.io/platform/WebAquarium3.1
- /
+Implementation-URL: https://platform.spring.io/platform/SpringDataWeb/
 Created-By: Maven Integration for Eclipse
 Implementation-Vendor: Pivotal Software, Inc.
 

@@ -10,11 +10,14 @@ import javax.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.tsugaruinfo.model.Mypersonaldata;
 
-@Service
+@Component
 public class MyPersonDataDaoImpl extends AbstractMyPersnalDataDao{
 
 	@Autowired
@@ -33,7 +36,7 @@ public class MyPersonDataDaoImpl extends AbstractMyPersnalDataDao{
 	@Override
 	public List<Mypersonaldata> getAllEntity() {
 		// TODO 自動生成されたメソッド・スタブ
-		Query query = manager.createQuery("from Mypersonaldata");
+		Query query = manager.createNamedQuery("Mypersonaldata.getAllEntity");
 		return query.getResultList();
 	}
 
@@ -43,20 +46,29 @@ public class MyPersonDataDaoImpl extends AbstractMyPersnalDataDao{
 		Query query = manager.createQuery("FROM Mypersonaldata WHERE " + field + " = '" + find + "'");
 		return query.getResultList();
 	}
+	
+	public List<Mypersonaldata> findByName(String name) {
+		// TODO 自動生成されたメソッド・スタブ
+		Query query = manager.createNamedQuery("Mypersonaldata.findByName")
+				.setParameter("value", name);
+		return query.getResultList();
+	}
 
 	@Override
 	public void updateEntity(Mypersonaldata entity) {
 		// TODO 自動生成されたメソッド・スタブ
+		EntityManager manager = factory.getNativeEntityManagerFactory().createEntityManager();
 		EntityTransaction transaction = manager.getTransaction();
 		transaction.begin();
 		manager.merge(entity);
 		manager.flush();
 		transaction.commit();
 	}
-
+	
 	@Override
 	public void addEntity(Mypersonaldata data) {
 		// TODO 自動生成されたメソッド・スタブ
+		EntityManager manager = factory.getNativeEntityManagerFactory().createEntityManager();
 		EntityTransaction transaction = manager.getTransaction();
 		transaction.begin();
 		manager.persist(data);
@@ -67,6 +79,7 @@ public class MyPersonDataDaoImpl extends AbstractMyPersnalDataDao{
 	@Override
 	public void removeEntity(Mypersonaldata data) {
 		// TODO 自動生成されたメソッド・スタブ
+		EntityManager manager = factory.getNativeEntityManagerFactory().createEntityManager();
 		EntityTransaction transaction = manager.getTransaction();
 		transaction.begin();
 		manager.remove(data);
@@ -76,8 +89,14 @@ public class MyPersonDataDaoImpl extends AbstractMyPersnalDataDao{
 	
 	public void removeEntity(int id) {
 		// TODO 自動生成されたメソッド・スタブ
+		EntityManager manager = factory.getNativeEntityManagerFactory().createEntityManager();
+		EntityTransaction transaction = manager.getTransaction();
+		transaction.begin();
+		
 		com.tsugaruinfo.model.Mypersonaldata rm_data = manager.find(com.tsugaruinfo.model.Mypersonaldata.class, id);
 		removeEntity((Mypersonaldata)rm_data);
+		
+		transaction.commit();
 	}
 
 }

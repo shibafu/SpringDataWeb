@@ -1,26 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns="http://www.springframework.org/schema/beans"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/data/jpa
+    	http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
     
     <!-- Uncomment and add your base-package here:
          <context:component-scan
             base-package="org.springframework.samples.service"/>  -->
-            
-            
+                    
+     
+     <context:property-placeholder location="classpath:database.properties" />
+     
      <context:annotation-config />
-     <context:component-scan base-package="com.tsugaruinfo"></context:component-scan>
+     <context:component-scan base-package="com.tsugaruinfo.*" annotation-config="true" />
      <!-- 組み込みデータベース用の設定>
 	<jdbc:embedded-database id="dataSource" type="H2">
 		<jdbc:script location="classpath:script.sql"/>
 	</jdbc:embedded-database-->
 
-	<!-- データベースプロパティの設定 -->
+	<!-- データベースプロパティの設定 >
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 	  	<property name="location" value="database.properties" />
-	</bean>
+	</bean-->
 
 	<bean
 	    class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
@@ -48,5 +59,13 @@
 	<bean class="org.springframework.jdbc.core.JdbcTemplate">
 		<constructor-arg ref="dataSource" />
 	</bean>
+	
+	<!-- JPA Repository 設定 -->
+	<jpa:repositories base-package="com.tsugaruinfo.repository" />
+	
+     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+        <property name="dataSource" ref="dataSource" />
+    </bean>
 
 </beans>

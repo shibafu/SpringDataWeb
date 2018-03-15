@@ -15,7 +15,13 @@ import lombok.Getter;
 @Data
 @Entity
 @Table(name="Mypersonaldata")
-@NamedQuery(name="Mypersonaldata.findAll", query="SELECT m FROM Mypersonaldata m")
+@NamedQueries({
+		@NamedQuery(name = "Mypersonaldata.getAllEntity",
+		query="FROM Mypersonaldata m"),
+		
+		@NamedQuery(name = "Mypersonaldata.findByName",
+		query="FROM Mypersonaldata m WHERE m.name = :value")
+})
 public class Mypersonaldata implements Serializable {
 	private static final long serialVersionUID = 1L;
 
