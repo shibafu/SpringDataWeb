@@ -12,15 +12,19 @@
 	<head>
 		<meta charset="utf-8">
 		<title>JPA Sample1</title>
+		<p><%=request.getAttribute("msg") %></p>
 	</head> 
 	<body>
 		<h1>Welcome to JPA Sample!</h1>
 		
 		<form method="post" action="person">
 		<table>
-			<tr><td>Name:Input<input type ="text" name="name"></td></tr>
-			<tr><td>Mail:Input<input type ="text" name="mail"></td></tr>
-			<tr><td>Age:Input<input type ="text" name="age"></td></tr>
+			<tr><td>Name:Input<input type ="text" name="name"
+			 value="<%=request.getAttribute("name") %>"></td></tr>
+			<tr><td>Mail:Input<input type ="text" name="mail"
+			value="<%=request.getAttribute("mail") %>"></td></tr>
+			<tr><td>Age:Input<input type ="text" name="age"
+			value="<%=request.getAttribute("age")%>"></td></tr>
 			<tr><td><input type ="submit" value="追加"></td></tr>
 		</table>
 		</form>

@@ -67,5 +67,9 @@
         <property name="entityManagerFactory" ref="entityManagerFactory" />
         <property name="dataSource" ref="dataSource" />
     </bean>
+    
+    <!-- Validator -->
+    <bean id="validator"
+    	class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
 
 </beans>

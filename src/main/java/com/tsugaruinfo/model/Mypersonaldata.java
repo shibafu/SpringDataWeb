@@ -2,6 +2,12 @@ package com.tsugaruinfo.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import lombok.Data;
 import lombok.Getter;
@@ -30,14 +36,20 @@ public class Mypersonaldata implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_seq")
 	@SequenceGenerator(name = "id_seq", sequenceName="mypersonadata_id", allocationSize = 1)
 	private Integer id;
-
+	
 	@Column
+	@NotNull(message="必須項目です。")
+	@Min(value=0, message="{value}以上でなければなりません。")
+	@Max(value=150, message="{value}以下でなければなりません")
 	private Integer age;
 
 	@Column(length=100)
+	@NotEmpty(message="必須項目です。")
+	@Email(message="メールアドレスの形式ではありません")
 	private String mail;
 
 	@Column
+	@NotEmpty(message="必須項目です。")
 	private String name;
 
 	public Mypersonaldata() {
