@@ -33,6 +33,7 @@
 	  	<property name="location" value="database.properties" />
 	</bean-->
 
+	<!-- EntityManagerをアノテーションから注入 -->
 	<bean
 	    class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
 
@@ -67,6 +68,13 @@
         <property name="entityManagerFactory" ref="entityManagerFactory" />
         <property name="dataSource" ref="dataSource" />
     </bean>
+    
+    <!-- bean id="transactionManager"
+ 	   class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		  <property name="dataSource" ref="dataSource"/>
+	</bean-->
+    
+    <!-- tx:annotation-driven transaction-manager="transactionManager"/ -->  
     
     <!-- Validator -->
     <bean id="validator"
