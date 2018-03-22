@@ -1,6 +1,9 @@
 package com.tsugaruinfo.servlet;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -17,6 +20,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.tsugaruinfo.dao.MyPersonDataDaoImpl;
 import com.tsugaruinfo.model.Mypersonaldata;
 import com.tsugaruinfo.repository.MyPesononalDataDaoRepository;
+
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
 
 /**
  * Servlet implementation class MyPersonalDataServlet
@@ -104,7 +114,7 @@ public class MyPersonalDataServlet extends BeanAutowiringFilterServlet {
 			
 			request.setAttribute("entities", repository.findAll());
 			request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
-		}		
+		}
 	}
 
 }
